@@ -1,4 +1,4 @@
-require './users'
+require './secrets'
 require 'rubygems'
 require 'capybara/dsl'
 
@@ -10,8 +10,8 @@ Capybara.default_wait_time = 15
 @session.find('.link-pedir').click
 
 @session.choose 'Usuário já cadastrado'
-@session.fill_in 'email', :with => @users[:china_in_box][:login]
-@session.fill_in 'senha', :with => @users[:china_in_box][:password]
+@session.fill_in 'email', :with => @secrets[:china_in_box][:login]
+@session.fill_in 'senha', :with => @secrets[:china_in_box][:password]
 @session.find('#IdentificaEmailSenha').find('input[name="Submit"]').click
 
 @session.fill_in 'codigo', :with => '04010000'
