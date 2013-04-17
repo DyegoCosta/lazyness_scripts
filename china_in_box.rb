@@ -28,3 +28,5 @@ product.find('button[name="add"]').click
 @session.find('input[name="pagamento"][value="Cartao"]').click
 @session.select 'VISA CREDITO', :from => 'detalhe_cartao'
 @session.click_on 'BtnCadastrar'
+
+@session.find(:xpath, '//font[contains(., "Pedido Processado com Sucesso")]')
