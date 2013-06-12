@@ -14,10 +14,10 @@ Capybara.default_wait_time = 15
 @session.fill_in 'senha', :with => @secrets[:china_in_box][:password]
 @session.find('#IdentificaEmailSenha').find('input[name="Submit"]').click
 
-@session.fill_in 'codigo', :with => '04010000'
-@session.fill_in 'numero', :with => '82'
-@session.fill_in 'complemento', :with => 'Ap. 50'
-@session.fill_in 'ponto_ref', :with => 'Metrô Paraíso'
+@session.fill_in 'codigo', :with => @addresses[:home][:zip_code]
+@session.fill_in 'numero', :with => @addresses[:home][:number]
+@session.fill_in 'complemento', :with => @addresses[:home][:address_2]
+@session.fill_in 'ponto_ref', :with => @addresses[:home][:reference]
 @session.click_on 'Cadastrar'
 
 @session.click_link '- TRADICIONAIS'
