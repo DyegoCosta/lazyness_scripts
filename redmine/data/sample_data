@@ -1,0 +1,4 @@
+<server_url>
+<user>;<password>
+<project_name>
+<date>;<hours>;<activity>;<comment:optional>;<<issue:optional>
