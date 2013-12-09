@@ -1,5 +1,4 @@
 require './secrets'
-require 'rubygems'
 require 'capybara/dsl'
 
 Capybara.default_wait_time = 15
