@@ -9,7 +9,7 @@ $ cd lazyness_scripts
 $ bundle install
 ```
 
-Edit the /lazyness_scripts/redmine/data/sample_data file
+Edit the /lazyness_scripts/redmine/data/sample_data file  
 obs. You can input as many log entries as you need  
 
 ```
