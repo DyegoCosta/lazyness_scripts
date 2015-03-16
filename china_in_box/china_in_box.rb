@@ -1,31 +1,41 @@
 require './secrets'
+require 'capybara/webkit'
 require 'capybara/dsl'
 
 Capybara.default_wait_time = 15
+Capybara.javascript_driver = :webkit
 
-@session = Capybara::Session.new(:selenium)
+s = Capybara::Session.new(:webkit)
 
-@session.visit 'http://www.chinainbox.com.br/'
-@session.find('.link-pedir').click
+product_name = 'YAKISOBA CLÁSSICO'
 
-@session.choose 'Usuário já cadastrado'
-@session.fill_in 'email', :with => @secrets[:china_in_box][:login]
-@session.fill_in 'senha', :with => @secrets[:china_in_box][:password]
-@session.find('#IdentificaEmailSenha').find('input[name="Submit"]').click
+s.visit 'http://www.chinainbox.com.br'
 
-@session.fill_in 'codigo', :with => @addresses[:home][:zip_code]
-@session.fill_in 'numero', :with => @addresses[:home][:number]
-@session.fill_in 'complemento', :with => @addresses[:home][:address_2]
-@session.fill_in 'ponto_ref', :with => @addresses[:home][:reference]
-@session.click_on 'Cadastrar'
+s.fill_in('txtTexto', with: product_name)
+s.find('.btn-search').click
 
-@session.click_link '- TRADICIONAIS'
-product = @session.find(:xpath, '//span//b[contains(., "YAKISOBA DE FRANGO JR")]/..')
-product.find('input[name="obs"]').set 'sem champignon'
-product.find('button[name="add"]').click
-@session.find('img#botao_finalizar').click
-@session.find('input[name="pagamento"][value="Cartao"]').click
-@session.select 'VISA CREDITO', :from => 'detalhe_cartao'
-@session.click_on 'BtnCadastrar'
+s.find('.btn-peca-online').click
 
-@session.find(:xpath, '//font[contains(., "Pedido Processado com Sucesso")]')
+s.fill_in('cep', with: @addresses[:home][:zip_code])
+s.fill_in('numero', with: @addresses[:home][:number])
+s.find('#btnEnviar').click
+
+s.visit 'https://www.deliverynow.com.br/site/novo/produtos.php'
+
+product = s.find(:xpath, "//div[@class='produtoItem']//label[contains(., '#{product_name}')]/..")
+product.fill_in('obs', with: 'sem champignon')
+product.find('.botao_adicionar').click
+
+s.find('#div_botao_finalizar a').click
+
+s.fill_in 'email_acesso', with: @secrets[:china_in_box][:login]
+s.fill_in 'senha', with: @secrets[:china_in_box][:password]
+s.find('#Entrar').click
+
+s.find('#Cadastrar').click
+
+s.find('input[name="pagamento"][value="Cartao"]').click
+s.select 'VISA CREDITO', from: 'detalhe_cartao'
+s.find('#BtnCadastrar').click
+
+s.find(:xpath, '//font[contains(., "Pedido Processado com Sucesso")]')
